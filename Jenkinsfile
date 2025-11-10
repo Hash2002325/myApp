@@ -34,11 +34,13 @@ if [ -f docker-compose.yaml ] || [ -f docker-compose.yml ]; then
     echo "Cleaning up old containers..."
     if command -v docker-compose >/dev/null 2>&1; then
         echo "Using docker-compose (v1)"
+        docker rm -f backend_c frontend_c mongodb_c 2>/dev/null || true
         docker-compose down --remove-orphans || true
         docker-compose pull || true
         docker-compose up -d --build
     else
         echo "Using docker compose (v2)"
+        docker rm -f backend_c frontend_c mongodb_c 2>/dev/null || true
         docker compose down --remove-orphans || true
         docker compose pull || true
         docker compose up -d --build
